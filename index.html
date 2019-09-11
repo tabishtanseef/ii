@@ -22,19 +22,52 @@ width:100%;
 }
 h3{
 background:#dadada;
-padding:5px;
+padding:10px;
 width:100%;
 position:fixed;
 margin-bottom:20px;
 box-shadow: 2px 2px 2px #aaa;
 }
+.navbar {
+  overflow: hidden;
+  background-color: #aaa;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.navbar span {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background: #f1f1f1;
+  color: black;
+}
+
+.navbar a.active {
+  background-color: #4CAF50;
+  color: white;
+}
 </style>
 </head>
 <body>
+
 <center><h3>Innovative Biology</h3></center>
 <div class='container'>
-
-	<img src='img/file-page1.jpg' id="pic1" style="margin-top:50px; width:100%; height:auto;"/>
+	<img src='img/file-page1.jpg' id="pic1" style="margin-top:100px; width:100%; height:auto;"/>
+</div>
+<div class="navbar">
+  <span href="#home" class="active"><img src="img/book.png" style="width:50px;"/></span>
+  <span href="#news"><img src="img/carry.png" style="width:50px;"/></span>
+  <span href="#contact"><img src="img/ani.png" style="width:50px;"/></span>
+  <span href="#contact"><img src="img/act.png" style="width:50px;"/></span>
 </div>
 <script>
 class Swipe {

@@ -55,6 +55,9 @@ box-shadow: 2px 2px 2px #aaa;
   background-color: #4CAF50;
   color: white;
 }
+.hidden{
+display:none;
+}
 </style>
 </head>
 <body>
@@ -62,14 +65,21 @@ box-shadow: 2px 2px 2px #aaa;
 <center><h3>Innovative Biology</h3></center>
 <div class='container'>
 	<img src='img/file-page1.jpg' id="pic1" style="margin-top:100px; width:100%; height:auto;"/>
+	<div class="row hidden" id="thumb">
+		<div id="three-columns" class="grid-container">
+        <ul class="rig columns-3">
+        </ul>
+		</div>
+	</div>
 </div>
 <div class="navbar">
-  <span href="#home" class="active"><img src="img/book.png" style="width:50px;"/></span>
-  <span href="#news"><img src="img/carry.png" style="width:50px;"/></span>
-  <span href="#contact"><img src="img/ani.png" style="width:50px;"/></span>
-  <span href="#contact"><img src="img/act.png" style="width:50px;"/></span>
+  <span onclick="book()" ><img src="img/book.png" style="width:50px;"/></span>
+  <span onclick="gto()"><img src="img/carry.png" style="width:50px;"/></span>
+  <span onclick="ani()"><img src="img/ani.png" style="width:50px;"/></span>
+  <span onclick="act()"><img src="img/act.png" style="width:50px;"/></span>
 </div>
 <script>
+
 class Swipe {
     constructor(element) {
         this.xDown = null;
@@ -143,6 +153,7 @@ class Swipe {
         }.bind(this), false);
     }
 }
+
 var b,f=2;
 // Use class to get element by string.
 var swiper = new Swipe('#pic1');
@@ -161,6 +172,28 @@ swiper.run();
 
 // One-liner.
 //(new Swipe('#pic1')).onLeft(function() { alert('hurryee.') }).run();
+function ani(){
+console.log('hii');
+ window.location.assign("https://tabishtanseef.github.io/IB6/ER_B_4.mp4")
+}
+function act(){
+  window.location.assign("https://tabishtanseef.github.io/IB6/ib6.html")
+}
+function gto(){
+var p = prompt('Enter Page No.');
+$('#pic1').attr('src','img/file-page'+p+'.jpg'); 
+f=p;
+b=f-1; 
+f++;
+}
+
+function book(){
+
+
+}
+
+
+
 </script>
 </body>
 </html>

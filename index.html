@@ -61,6 +61,7 @@ display:none;
 li {  
 float: left;
 max-width: 33.33%;
+margin-top:10px;
 list-style-type:none;  
 }
 img{
@@ -171,7 +172,7 @@ swiper.run();
 
 
 var swiper = new Swipe('#pic1');
-swiper.onRight(function() { $('#pic1').attr('src','img/file-page'+b+'.jpg'); b--;});
+swiper.onRight(function() { $('#pic1').attr('src','img/file-page'+b+'.jpg'); f=b+1; b--; });
 swiper.run();
 
 // Get the element yourself.

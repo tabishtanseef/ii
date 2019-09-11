@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="description" content="Progress Button Styles: Creative effects for loading buttons" />
+<link href="https://fonts.googleapis.com/css?family=Assistant:800|Major+Mono+Display|PT+Sans" rel="stylesheet">
+<meta name="keywords" content="progress button, loading button, 3d, loading indicator, progress indicator" />
+<meta name="author" content="Codrops" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Gamja+Flower|Kanit|Raleway" rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<style>
+* {
+  margin: 0;
+}
+body {
+  overflow-x: hidden;
+}
+.container {
+  --n: 1;
+  display: flex;
+  align-items: center;
+  overflow-y: hidden;
+  width: 100%;
+  width: calc(var(--n)*100%);
+  height: 50vw;
+  max-height: 100vh;
+  transform: translate(calc(var(--i, 0)/var(--n)*-100%));
+  transition: transform 0.5s ease-out;
+}
+.container img {
+  width: 100%;
+  width: calc(100%/var(--n));
+  user-select: none;
+  pointer-events: none;
+}
+
+
+</style>
+</head>
+<body>
+	<div class='container'>
+	<img src='https://images.unsplash.com/photo-1514117445516-2ecfc9c4ec90?ixlib=rb-0.3.5&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb&amp;ixid=eyJhcHBfaWQiOjE0NTg5fQ&amp;s=0e0b58fcf67fa6e8a010322d617e39af' alt='Mountain massif, sunbathed, partly covered in show.'/>
+	<img src='https://images.unsplash.com/photo-1510325805092-2951ab330b7d?ixlib=rb-0.3.5&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb&amp;ixid=eyJhcHBfaWQiOjE0NTg5fQ&amp;s=017cf46443f4821a375c20e8c68e37f0' alt='Tiny bird with pale brown, orange and white feathers in an evergreen tree.'/>
+	<img src='https://images.unsplash.com/photo-1514848567240-a81cb051807a?ixlib=rb-0.3.5&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb&amp;ixid=eyJhcHBfaWQiOjE0NTg5fQ&amp;s=3a0e476ab712db0eb68ab121a21c54de' alt='Close-up of yellow rose opening up.'/>
+	<img src='https://images.unsplash.com/photo-1465408522361-a6f502298219?ixlib=rb-0.3.5&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb&amp;ixid=eyJhcHBfaWQiOjE0NTg5fQ&amp;s=7a6bd1244c42d1dbd3984a4c13981666' alt='Fast and foamy creek in the middle of the forest.'/>
+	<img src='https://images.unsplash.com/photo-1503843778847-2b8bdce2ed3d?ixlib=rb-0.3.5&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb&amp;ixid=eyJhcHBfaWQiOjE0NTg5fQ&amp;s=d547781176ce182eeeb7303bac05abf4' alt='Fluffy little tabby with blue eyes climbing up a tree.'/>
+</div>
+<script>
+var _C = document.querySelector('.container'), 
+N = _C.children.length;
+
+var i = 0, x0 = null;
+
+function unify(e) {	
+return e.changedTouches ? e.changedTouches[0] : e; 
+};
+
+function lock(e) { 
+x0 = unify(e).clientX ;
+};
+
+function move(e) {
+	if(x0 || x0 === 0) {
+		var dx = unify(e).clientX - x0, 
+		s = Math.sign(dx);
+
+		if((i > 0 || s < 0) && (i < N - 1 || s > 0))_C.style.setProperty('--i', i -= s);
+		x0 = null;
+	}
+};
+
+_C.style.setProperty('--n', N);
+
+_C.addEventListener('mousedown', lock, false);
+_C.addEventListener('touchstart', lock, false);
+
+_C.addEventListener('touchmove', function(e) { 
+ e.preventDefault() }, false);
+
+_C.addEventListener('mouseup', move, false);
+_C.addEventListener('touchend', move, false);
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

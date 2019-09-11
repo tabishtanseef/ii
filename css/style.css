@@ -1,0 +1,40 @@
+.backArea{
+background:#E5E5E5;
+border-radius:20px;
+margin-top:10px;
+box-shadow:2px 2px 2px #aaa;
+}
+.a{
+	width:30%;
+	float:left;
+	height:120px;
+	padding:auto;
+	margin:auto;
+}
+.b{
+	width:70%;
+	float:right;
+	height:120px;
+	padding-top:20px;
+}
+.name{
+	width:100%;
+	text-align:center;
+	padding:10px;
+	
+}
+.btn{
+	width:100px;
+}
+.fbtn{
+	width:33%;
+	float:left;
+}
+.sbtn{
+	width:33%;
+	float:left;
+}
+.tbtn{
+	width:33%;
+	float:left;
+}

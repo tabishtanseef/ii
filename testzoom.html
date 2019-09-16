@@ -89,11 +89,179 @@ img{
 	
 
 	<div class="pinch-zoom-container">
-      <img id="pinch-zoom-image-id" class="pinch-zoom-image" onload="onLoad()" style=" width:100%; height:auto;"
-           src="img/file-page1.jpg">
+      <img src="img/file-page1.jpg" id="pinch-zoom-image-id" class="pinch-zoom-image" onload="onLoad()" width="100%" >
     </div>
 	<script src="https://hammerjs.github.io/dist/hammer.js"></script>
-	<script>
+	
+    
+	<div id="pictureBlock" style="margin-top:20px;">
+		<div id="three-columns" class="grid-container">
+			<ul class="rig columns-3">
+			
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="navbar bot">
+
+  <span onclick="zoomIn()" ><img src="img/in.png" style="width:50px;"/></span>
+  <span onclick="zoomOut()" ><img src="img/out.png" style="width:50px;"/></span>
+  <span onclick="book()" ><img src="img/book.png" style="width:50px;"/></span>
+  <span class="new-prompt"><img src="img/carry.png" style="width:50px;"/></span>
+  
+</div>
+<script>
+
+class Swipe {
+    constructor(element) {
+        this.xDown = null;
+        this.yDown = null;
+        this.element = typeof(element) === 'string' ? document.querySelector(element) : element;
+
+        this.element.addEventListener('touchstart', function(evt) {
+            this.xDown = evt.touches[0].clientX;
+            this.yDown = evt.touches[0].clientY;
+        }.bind(this), false);
+
+    }
+
+    onLeft(callback) {
+        this.onLeft = callback;
+
+        return this;
+    }
+
+    onRight(callback) {
+        this.onRight = callback;
+
+        return this;
+    }
+
+    onUp(callback) {
+        this.onUp = callback;
+
+        return this;
+    }
+
+    onDown(callback) {
+        this.onDown = callback;
+
+        return this;
+    }
+
+    handleTouchMove(evt) {
+        if ( ! this.xDown || ! this.yDown ) {
+            return;
+        }
+
+        var xUp = evt.touches[0].clientX;
+        var yUp = evt.touches[0].clientY;
+
+        this.xDiff = this.xDown - xUp;
+        this.yDiff = this.yDown - yUp;
+
+        if ( Math.abs( this.xDiff ) > Math.abs( this.yDiff ) ) { // Most significant.
+            if ( this.xDiff > 0 ) {
+                this.onLeft();
+            } else {
+                this.onRight();
+            }
+        } else {
+            if ( this.yDiff > 0 ) {
+                this.onUp();
+            } else {
+                this.onDown();
+            }
+        }
+
+        // Reset values.
+        this.xDown = null;
+        this.yDown = null;
+    }
+
+    run() {
+        this.element.addEventListener('touchmove', function(evt) {
+            this.handleTouchMove(evt)
+        }.bind(this), false);
+    }
+}
+
+var b,f=2;
+// Use class to get element by string.
+var swiper = new Swipe('#pinch-zoom-image-id');
+swiper.onLeft(function() { 
+if ( $('#pinch-zoom-image-id').attr('alt') == 'images' ) {
+    $('#pinch-zoom-image-id').attr('src','img/file-page'+f+'.jpg'); b=f-1; f++;
+} else {
+    zoomOut();
+}
+
+
+});
+swiper.run();
+
+
+var swiper = new Swipe('#pinch-zoom-image-id');
+swiper.onRight(function() { 
+if ( $('#pinch-zoom-image-id').attr('alt') == 'images' ) {
+$('#pinch-zoom-image-id').attr('src','img/file-page'+b+'.jpg'); f=b+1; b--; 
+} else {
+    zoomOut();
+}
+});
+swiper.run();
+
+// Get the element yourself.
+//var swiper = new Swipe(document.getElementById('pinch-zoom-image-id'));
+//swiper.onLeft(function() { alert('You swiped left.') });
+//swiper.run();
+
+// One-liner.
+//(new Swipe('#pinch-zoom-image-id')).onLeft(function() { alert('hurryee.') }).run();
+function ani(){
+console.log('hii');
+ window.location.assign("https://tabishtanseef.github.io/IB6/ani.html")
+}
+function act(){
+  window.location.assign("https://tabishtanseef.github.io/IB6/ib6.html")
+}
+
+
+document.querySelector('.new-prompt').addEventListener('click', function() {
+                new Attention.Prompt({
+                    title: 'Go To Page',
+                    content: 'Enter the Page No.',
+                    onSubmit: function(component, value) {
+
+					$('#pinch-zoom-image-id').attr('src','img/file-page'+value+'.jpg'); 
+					f=value;
+					b=f-1; 
+					f++;
+                  }
+                });
+            });
+
+
+
+function to(a){
+console.log('hii');
+$('#pinch-zoom-image-id').removeClass('hidden');
+$('ul').addClass('hidden');
+$('#pinch-zoom-image-id').attr('src','img/file-page'+a+'.jpg'); 
+f=a;
+b=f-1; 
+f++;
+}
+
+function book(){
+$('#pinch-zoom-image-id').addClass('hidden');
+var numberOfImages = 144;
+var $container = $("#pictureBlock ul");
+for (var i=1; i<=numberOfImages; i++) {
+  $container.append("<li><img style='width:90%;' onClick='to("+i+")' src='img/file-page"+i+".jpg' /><br><b style='font-size:8px;'>Page "+i+"</b></li>");
+}
+
+}
 
       var MIN_SCALE = 1; // 1=scaling when first loaded
       var MAX_SCALE = 64;
@@ -129,6 +297,7 @@ img{
 
         events.forEach(function (event) {
           img[event] = function () {
+		  console.log('disable');
             return false;
           };
         });
@@ -246,10 +415,12 @@ img{
       };
 
       var zoomIn = function () {
+	  $('#pinch-zoom-image-id').attr('alt','book');
         zoomCenter(2);
       };
 
       var zoomOut = function () {
+	  $('#pinch-zoom-image-id').attr('alt','images');
         zoomCenter(1/2);
       };
 
@@ -321,168 +492,6 @@ img{
         });
 
       };
-
-    </script>
-
-    
-	<div id="pictureBlock" style="margin-top:20px;">
-		<div id="three-columns" class="grid-container">
-			<ul class="rig columns-3">
-			
-			</ul>
-		</div>
-	</div>
-</div>
-<div class="navbar bot">
-
-  <span onclick="zoomIn()" ><img src="img/in.png" style="width:50px;"/></span>
-  <span onclick="zoomOut()" ><img src="img/out.png" style="width:50px;"/></span>
-  <span onclick="book()" ><img src="img/book.png" style="width:50px;"/></span>
-  <span class="new-prompt"><img src="img/carry.png" style="width:50px;"/></span>
-  
-</div>
-<script>
-
-class Swipe {
-    constructor(element) {
-        this.xDown = null;
-        this.yDown = null;
-        this.element = typeof(element) === 'string' ? document.querySelector(element) : element;
-
-        this.element.addEventListener('touchstart', function(evt) {
-            this.xDown = evt.touches[0].clientX;
-            this.yDown = evt.touches[0].clientY;
-        }.bind(this), false);
-
-    }
-
-    onLeft(callback) {
-        this.onLeft = callback;
-
-        return this;
-    }
-
-    onRight(callback) {
-        this.onRight = callback;
-
-        return this;
-    }
-
-    onUp(callback) {
-        this.onUp = callback;
-
-        return this;
-    }
-
-    onDown(callback) {
-        this.onDown = callback;
-
-        return this;
-    }
-
-    handleTouchMove(evt) {
-        if ( ! this.xDown || ! this.yDown ) {
-            return;
-        }
-
-        var xUp = evt.touches[0].clientX;
-        var yUp = evt.touches[0].clientY;
-
-        this.xDiff = this.xDown - xUp;
-        this.yDiff = this.yDown - yUp;
-
-        if ( Math.abs( this.xDiff ) > Math.abs( this.yDiff ) ) { // Most significant.
-            if ( this.xDiff > 0 ) {
-                this.onLeft();
-            } else {
-                this.onRight();
-            }
-        } else {
-            if ( this.yDiff > 0 ) {
-                this.onUp();
-            } else {
-                this.onDown();
-            }
-        }
-
-        // Reset values.
-        this.xDown = null;
-        this.yDown = null;
-    }
-
-    run() {
-        this.element.addEventListener('touchmove', function(evt) {
-            this.handleTouchMove(evt)
-        }.bind(this), false);
-    }
-}
-
-var b,f=2;
-// Use class to get element by string.
-var swiper = new Swipe('#pinch-zoom-image-id');
-swiper.onLeft(function() { 
-
-$('#pinch-zoom-image-id').attr('src','img/file-page'+f+'.jpg'); b=f-1; f++;
-
-});
-swiper.run();
-
-
-var swiper = new Swipe('#pinch-zoom-image-id');
-swiper.onRight(function() { $('#pinch-zoom-image-id').attr('src','img/file-page'+b+'.jpg'); f=b+1; b--; });
-swiper.run();
-
-// Get the element yourself.
-//var swiper = new Swipe(document.getElementById('pinch-zoom-image-id'));
-//swiper.onLeft(function() { alert('You swiped left.') });
-//swiper.run();
-
-// One-liner.
-//(new Swipe('#pinch-zoom-image-id')).onLeft(function() { alert('hurryee.') }).run();
-function ani(){
-console.log('hii');
- window.location.assign("https://tabishtanseef.github.io/IB6/ani.html")
-}
-function act(){
-  window.location.assign("https://tabishtanseef.github.io/IB6/ib6.html")
-}
-
-
-document.querySelector('.new-prompt').addEventListener('click', function() {
-                new Attention.Prompt({
-                    title: 'Go To Page',
-                    content: 'Enter the Page No.',
-                    onSubmit: function(component, value) {
-
-					$('#pinch-zoom-image-id').attr('src','img/file-page'+value+'.jpg'); 
-					f=value;
-					b=f-1; 
-					f++;
-                  }
-                });
-            });
-
-
-
-function to(a){
-console.log('hii');
-$('#pinch-zoom-image-id').removeClass('hidden');
-$('ul').addClass('hidden');
-$('#pinch-zoom-image-id').attr('src','img/file-page'+a+'.jpg'); 
-f=a;
-b=f-1; 
-f++;
-}
-
-function book(){
-$('#pinch-zoom-image-id').addClass('hidden');
-var numberOfImages = 144;
-var $container = $("#pictureBlock ul");
-for (var i=1; i<=numberOfImages; i++) {
-  $container.append("<li><img style='width:90%;' onClick='to("+i+")' src='img/file-page"+i+".jpg' /><br><b style='font-size:8px;'>Page "+i+"</b></li>");
-}
-
-}
 
 
 

@@ -173,7 +173,11 @@ class Swipe {
 var b,f=2;
 // Use class to get element by string.
 var swiper = new Swipe('#pic1');
-swiper.onLeft(function() { $('#pic1').attr('src','img/file-page'+f+'.jpg'); b=f-1; f++;});
+swiper.onLeft(function() { 
+
+$('#pic1').attr('src','img/file-page'+f+'.jpg'); b=f-1; f++;
+
+});
 swiper.run();
 
 
@@ -232,6 +236,7 @@ for (var i=1; i<=numberOfImages; i++) {
 }
 
 }
+
 
 
 

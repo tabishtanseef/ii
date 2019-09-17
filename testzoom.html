@@ -107,8 +107,8 @@ img{
 </div>
 <div class="navbar bot">
 
-  <span onclick="zoomIn()" ><img src="img/in.png" style="width:50px;"/></span>
-  <span onclick="zoomOut()" ><img src="img/out.png" style="width:50px;"/></span>
+  <span  ><img src="img/in.png" id="in" style="width:50px;" onclick="zoomIn()"/></span>
+  <span  ><img src="img/out.png" style="width:50px;" onclick="zoomOut()"/></span>
   <span onclick="book()" ><img src="img/book.png" style="width:50px;"/></span>
   <span class="new-prompt"><img src="img/carry.png" style="width:50px;"/></span>
   
@@ -420,12 +420,14 @@ for (var i=1; i<=numberOfImages; i++) {
       var zoomIn = function () {
 	  $('#pinch-zoom-image-id').attr('alt','book');
 	  $('#pinch-zoom-image-id').removeClass('pinch-zoom-image');
+	  $('#in').css("pointer-events", "none");
         zoomCenter(2);
       };
 
       var zoomOut = function () {
 	  $('#pinch-zoom-image-id').attr('alt','images');
 	  $('#pinch-zoom-image-id').addClass('pinch-zoom-image');
+	  $('#in').css("pointer-events", "auto");
         zoomCenter(1/2);
       };
 

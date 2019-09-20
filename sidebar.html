@@ -456,7 +456,14 @@ var b,f=2;
 var swiper = new Swipe('.pinch-zoom-image');
 swiper.onLeft(function() { 
 if ( $('#pinch-zoom-image-id').attr('alt') == 'images' ) {
+  var v = $('#pinch-zoom-image-id').attr('src');
+  console.log(v);
+	if ( $('#pinch-zoom-image-id').attr('src') == 'img/file-page144.jpg'){
+	
+	}
+	else{
     $('#pinch-zoom-image-id').attr('src','img/file-page'+f+'.jpg'); b=f-1; f++;
+	}
 } else {
    
 }
@@ -469,7 +476,12 @@ swiper.run();
 var swiper = new Swipe('.pinch-zoom-image');
 swiper.onRight(function() { 
 if ( $('#pinch-zoom-image-id').attr('alt') == 'images' ) {
-$('#pinch-zoom-image-id').attr('src','img/file-page'+b+'.jpg'); f=b+1; b--; 
+	if ( $('#pinch-zoom-image-id').attr('src') == 'img/file-page1.jpg'){
+	
+	}
+	else{
+	$('#pinch-zoom-image-id').attr('src','img/file-page'+b+'.jpg'); f=b+1; b--; 
+	}
 } else {
     
 }

@@ -227,10 +227,13 @@ max-width: 33.33%;
 margin-top:10px;
 list-style-type:none;  
 }
-
+li{
+font-size:14px !important;
+}
 </style>
 </head>
 <body>
+<script src="dist/attention.js"></script>
     <!-- Sidebar -->
     <nav id="sidebar">
 
@@ -239,45 +242,65 @@ list-style-type:none;
         </div>
 
         <div class="sidebar-header">
-            <h3>Bootstrap Sidebar</h3>
+            Innovative Biology
         </div>
 
         <ul class="list-unstyled components">
-            <p>Dummy Heading</p>
-            <li class="active">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
+            <p>Innovative Biology</p>
+            <li>
+                <a href="#" onClick='to(11)'>An Introduction to Biology</a>
+            </li>
+			<li class="active">
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Unit 1 : Plant Life</a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
                     <li>
-                        <a href="#">Home 1</a>
+                        <a href="#" onClick='to(13)'>1. Plant Life — The Leaf</a>
                     </li>
                     <li>
-                        <a href="#">Home 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Home 3</a>
+                        <a href="#" onClick='to(29)'>2. Plant Life — The Flower</a>
                     </li>
                 </ul>
             </li>
             <li>
-                <a href="#">About</a>
-                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Unit 2 : The Cell</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
                     <li>
-                        <a href="#">Page 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Page 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Page 3</a>
+                        <a href="#" onClick='to(45)'>3. Cell — The Basic Unit of Life</a>
                     </li>
                 </ul>
             </li>
             <li>
-                <a href="#">Portfolio</a>
+                <a href="#pageSubmenu1" data-toggle="collapse" aria-expanded="false">Unit 3 : Human Body</a>
+                <ul class="collapse list-unstyled" id="pageSubmenu1">
+                    <li>
+                        <a href="#" onClick='to(63)'>4. Human Body — Digestive System</a>
+                    </li>
+                    <li>
+                        <a href="#" onClick='to(79)'>5. Human Body — Respiratory System</a>
+                    </li>
+                    <li>
+                        <a href="#" onClick='to(92)'>6. Human Body — Circulatory System</a>
+                    </li>
+                </ul>
             </li>
             <li>
-                <a href="#">Contact</a>
+                <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false">Unit 4 : Health and Hygiene</a>
+                <ul class="collapse list-unstyled" id="pageSubmenu2">
+                    <li>
+                        <a href="#" onClick='to(110)'>7. Health and Hygiene</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#pageSubmenu3" data-toggle="collapse" aria-expanded="false">Unit 5 : Adaptation</a>
+                <ul class="collapse list-unstyled" id="pageSubmenu3">
+                    <li>
+                        <a href="#" onClick='to(129)'>8. Adaptation</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" onClick='to(143)'>Keywords</a>
             </li>
         </ul>
     </nav>
@@ -303,7 +326,7 @@ list-style-type:none;
 			<script src="https://hammerjs.github.io/dist/hammer.js"></script>
 			<div id="pictureBlock" style="margin-top:20px; ">
 				<div id="three-columns" class="grid-container">
-					<ul class="rig columns-3">
+					<ul class="rig columns-3 bookimg">
 					</ul>
 				</div>
 			</div>
@@ -313,7 +336,7 @@ list-style-type:none;
 	
     <!-- Dark Overlay element -->
     
-<div class="navbar bot" style="margin-bottom:-10px;">
+<div class="navbar bot" style="margin-bottom:0px;">
 
   <span  ><img src="img/in.png" id="in" style="width:50px;" onclick="zoomIn()"/></span>
   <span  ><img src="img/out.png" style="width:50px;" onclick="zoomOut()"/></span>
@@ -474,7 +497,8 @@ document.querySelector('.new-prompt').addEventListener('click', function() {
                     title: 'Go To Page',
                     content: 'Enter the Page No.',
                     onSubmit: function(component, value) {
-
+					$('.bookimg').addClass('hidden');
+					$('#pinch-zoom-image-id').removeClass('hidden');
 					$('#pinch-zoom-image-id').attr('src','img/file-page'+value+'.jpg'); 
 					f=value;
 					b=f-1; 
@@ -487,8 +511,11 @@ document.querySelector('.new-prompt').addEventListener('click', function() {
 
 function to(a){
 console.log('hii');
+$('#sidebar').removeClass('active');
+            // hide overlay
 $('#pinch-zoom-image-id').removeClass('hidden');
-$('ul').addClass('hidden');
+$('.bookimg').addClass('hidden');
+
 $('#pinch-zoom-image-id').attr('src','img/file-page'+a+'.jpg'); 
 f=a;
 b=f-1; 
@@ -497,6 +524,7 @@ f++;
 
 function book(){
 $('#pinch-zoom-image-id').addClass('hidden');
+$('.bookimg').removeClass('hidden');
 var numberOfImages = 144;
 var $container = $("#pictureBlock ul");
 for (var i=1; i<=numberOfImages; i++) {

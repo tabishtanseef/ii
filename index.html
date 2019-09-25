@@ -1,102 +1,383 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="description" content="Progress Button Styles: Creative effects for loading buttons" />
-<link href="https://fonts.googleapis.com/css?family=Assistant:800|Major+Mono+Display|PT+Sans" rel="stylesheet">
-<meta name="keywords" content="progress button, loading button, 3d, loading indicator, progress indicator" />
-<meta name="author" content="Codrops" />
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Collapsible sidebar using Bootstrap 4</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+	<link rel="stylesheet" href="style3.css">
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-<link href="css/style.css" rel="stylesheet" type="text/css">
+
 <link href="dist/attention.css" rel="stylesheet">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link href="https://fonts.googleapis.com/css?family=Gamja+Flower|Kanit|Raleway" rel="stylesheet">
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 <style>
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #fafafa;
+}
+
+p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
+}
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    height: 100vh;
+    z-index: 999;
+    background: #7386D5;
+    color: #fff;
+    transition: all 0.3s;
+    overflow-y: scroll;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+#sidebar.active {
+    left: 0;
+}
+
+#dismiss {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    background: #7386D5;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+#dismiss:hover {
+    background: #fff;
+    color: #7386D5;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 998;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+.overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #6d7fcc;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #47748b;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    color: #7386D5;
+    background: #fff;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #6d7fcc;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #6d7fcc;
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+a.download {
+    background: #fff;
+    color: #7386D5;
+}
+
+a.article,
+a.article:hover {
+    background: #6d7fcc !important;
+    color: #fff !important;
+}
+.bot{
+ background:#ffd1dc;
+ position: fixed;
+ bottom: 0;
+ width: 100%;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+    width: 100%;
+    padding: 10px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 .container{
 margin:auto;
 width:100%;
 }
-h2{
-background:#dadada;
-padding:20px;
-width:100%;
-margin-top:0px;
-margin-bottom:20px;
-box-shadow: 2px 2px 2px #aaa;
-}
-.navbar {
-  overflow: hidden;
-  background-color: #aaa;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-}
-
-.navbar span {
-  float: left;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-.navbar a:hover {
-  background: #f1f1f1;
-  color: black;
-}
-
-.navbar a.active {
-  background-color: #4CAF50;
-  color: white;
-}
 .hidden{
 display:none;
 }
-li {  
+.nail {  
 float: left;
 max-width: 33.33%;
 margin-top:10px;
 list-style-type:none;  
 }
-img{
-  -webkit-filter: drop-shadow(2px 2px 2px #222);
-  filter: drop-shadow(2px 2px 2px #222);
+li{
+font-size:14px !important;
 }
-
 </style>
 </head>
 <body>
 <script src="dist/attention.js"></script>
-<center><a href="sidebar.html"><h2>Innovative Biology</h2></a></center>
-<div class='container' style="margin-top:20px;">
-	
-	<img src='img/file-page1.jpg' id="pic1" style=" width:100%; height:auto;"/>
-	
-	
-	<div id="pictureBlock" style="margin-top:20px;">
-		<div id="three-columns" class="grid-container">
-			<ul class="rig columns-3">
-			
-			</ul>
+    <!-- Sidebar -->
+    <nav id="sidebar">
+
+        <div id="dismiss">
+            <i class="fas fa-arrow-left"></i>
+        </div>
+
+        <div class="sidebar-header">
+            Innovative Biology
+        </div>
+
+        <ul class="list-unstyled components">
+            <p>Innovative Biology</p>
+            <li>
+                <a href="#" onClick='to(11)'>An Introduction to Biology</a>
+            </li>
+			<li class="active">
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Unit 1 : Plant Life</a>
+                <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <li>
+                        <a href="#" onClick='to(13)'>1. Plant Life — The Leaf</a>
+                    </li>
+                    <li>
+                        <a href="#" onClick='to(29)'>2. Plant Life — The Flower</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Unit 2 : The Cell</a>
+                <ul class="collapse list-unstyled" id="pageSubmenu">
+                    <li>
+                        <a href="#" onClick='to(45)'>3. Cell — The Basic Unit of Life</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#pageSubmenu1" data-toggle="collapse" aria-expanded="false">Unit 3 : Human Body</a>
+                <ul class="collapse list-unstyled" id="pageSubmenu1">
+                    <li>
+                        <a href="#" onClick='to(63)'>4. Human Body — Digestive System</a>
+                    </li>
+                    <li>
+                        <a href="#" onClick='to(79)'>5. Human Body — Respiratory System</a>
+                    </li>
+                    <li>
+                        <a href="#" onClick='to(92)'>6. Human Body — Circulatory System</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false">Unit 4 : Health and Hygiene</a>
+                <ul class="collapse list-unstyled" id="pageSubmenu2">
+                    <li>
+                        <a href="#" onClick='to(110)'>7. Health and Hygiene</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#pageSubmenu3" data-toggle="collapse" aria-expanded="false">Unit 5 : Adaptation</a>
+                <ul class="collapse list-unstyled" id="pageSubmenu3">
+                    <li>
+                        <a href="#" onClick='to(129)'>8. Adaptation</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" onClick='to(143)'>Keywords</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Page Content -->
+
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                    <i class="fas fa-align-left"></i>
+                    <span>Innovative Biology</span>
+                </button>
+				 <span onclick="ani()"><img src="img/ani.png" style="width:50px;"/></span>
+				<span onclick="act()"><img src="img/act.png" style="width:50px;"/></span>
+            </div>
+        </nav>
+		
+		<div class='container' style="margin-top:20px;">
+			<div class="pinch-zoom-container">
+			  <img src="img/file-page1.jpg"  id="pinch-zoom-image-id" class="pinch-zoom-image disable-dbl-tap-zoom"  width="100%" alt="images" >
+			</div>
+			<script src="https://hammerjs.github.io/dist/hammer.js"></script>
+			<div id="pictureBlock" style="margin-top:20px; ">
+				<div id="three-columns" class="grid-container">
+					<ul class="rig columns-3 bookimg">
+					</ul>
+				</div>
+			</div>
 		</div>
-	</div>
-</div>
-<div class="navbar">
+		
+
+	
+    <!-- Dark Overlay element -->
+    
+<div class="navbar bot" style="margin-bottom:0px;">
+
+  <span  ><img src="img/in.png" id="in" style="width:50px;" onclick="zoomIn()"/></span>
+  <span  ><img src="img/out.png" style="width:50px;" onclick="zoomOut()"/></span>
   <span onclick="book()" ><img src="img/book.png" style="width:50px;"/></span>
   <span class="new-prompt"><img src="img/carry.png" style="width:50px;"/></span>
-  <span onclick="ani()"><img src="img/ani.png" style="width:50px;"/></span>
-  <span onclick="act()"><img src="img/act.png" style="width:50px;"/></span>
+  
 </div>
-<script>
+<!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <!-- jQuery Custom Scroller CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
-class Swipe {
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sidebar").mCustomScrollbar({
+            theme: "minimal"
+        });
+		onLoad();
+        $('#dismiss, .overlay').on('click', function () {
+            // hide sidebar
+            $('#sidebar').removeClass('active');
+            // hide overlay
+            $('.overlay').removeClass('active');
+        });
+
+        $('#sidebarCollapse').on('click', function () {
+            // open sidebar
+            $('#sidebar').addClass('active');
+            // fade in the overlay
+            $('.overlay').addClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+    });
+	
+	
+	class Swipe {
     constructor(element) {
         this.xDown = null;
         this.yDown = null;
@@ -145,13 +426,13 @@ class Swipe {
         this.yDiff = this.yDown - yUp;
 
         if ( Math.abs( this.xDiff ) > Math.abs( this.yDiff ) ) { // Most significant.
-            if ( this.xDiff > 1000 ) {
+            if ( this.xDiff > 0 ) {
                 this.onLeft();
             } else {
                 this.onRight();
             }
         } else {
-            if ( this.yDiff > 1000 ) {
+            if ( this.yDiff > 0 ) {
                 this.onUp();
             } else {
                 this.onDown();
@@ -172,26 +453,48 @@ class Swipe {
 
 var b,f=2;
 // Use class to get element by string.
-var swiper = new Swipe('#pic1');
+var swiper = new Swipe('.pinch-zoom-image');
 swiper.onLeft(function() { 
+if ( $('#pinch-zoom-image-id').attr('alt') == 'images' ) {
+  var v = $('#pinch-zoom-image-id').attr('src');
+  console.log(v);
+	if ( $('#pinch-zoom-image-id').attr('src') == 'img/file-page144.jpg'){
+	
+	}
+	else{
+    $('#pinch-zoom-image-id').attr('src','img/file-page'+f+'.jpg'); b=f-1; f++;
+	}
+} else {
+   
+}
 
-$('#pic1').attr('src','img/file-page'+f+'.jpg'); b=f-1; f++;
 
 });
 swiper.run();
 
 
-var swiper = new Swipe('#pic1');
-swiper.onRight(function() { $('#pic1').attr('src','img/file-page'+b+'.jpg'); f=b+1; b--; });
+var swiper = new Swipe('.pinch-zoom-image');
+swiper.onRight(function() { 
+if ( $('#pinch-zoom-image-id').attr('alt') == 'images' ) {
+	if ( $('#pinch-zoom-image-id').attr('src') == 'img/file-page1.jpg'){
+	
+	}
+	else{
+	$('#pinch-zoom-image-id').attr('src','img/file-page'+b+'.jpg'); f=b+1; b--; 
+	}
+} else {
+    
+}
+});
 swiper.run();
 
 // Get the element yourself.
-//var swiper = new Swipe(document.getElementById('pic1'));
+//var swiper = new Swipe(document.getElementById('pinch-zoom-image-id'));
 //swiper.onLeft(function() { alert('You swiped left.') });
 //swiper.run();
 
 // One-liner.
-//(new Swipe('#pic1')).onLeft(function() { alert('hurryee.') }).run();
+//(new Swipe('#pinch-zoom-image-id')).onLeft(function() { alert('hurryee.') }).run();
 function ani(){
 console.log('hii');
  window.location.assign("https://tabishtanseef.github.io/IB6/ani.html")
@@ -206,8 +509,9 @@ document.querySelector('.new-prompt').addEventListener('click', function() {
                     title: 'Go To Page',
                     content: 'Enter the Page No.',
                     onSubmit: function(component, value) {
-
-					$('#pic1').attr('src','img/file-page'+value+'.jpg'); 
+					$('.bookimg').addClass('hidden');
+					$('#pinch-zoom-image-id').removeClass('hidden');
+					$('#pinch-zoom-image-id').attr('src','img/file-page'+value+'.jpg'); 
 					f=value;
 					b=f-1; 
 					f++;
@@ -219,36 +523,275 @@ document.querySelector('.new-prompt').addEventListener('click', function() {
 
 function to(a){
 console.log('hii');
-$('#pic1').removeClass('hidden');
-$('ul').addClass('hidden');
-$('#pic1').attr('src','img/file-page'+a+'.jpg'); 
+$('#sidebar').removeClass('active');
+            // hide overlay
+$('#pinch-zoom-image-id').removeClass('hidden');
+$('.bookimg').addClass('hidden');
+
+$('#pinch-zoom-image-id').attr('src','img/file-page'+a+'.jpg'); 
 f=a;
 b=f-1; 
 f++;
 }
 
 function book(){
-$('#pic1').addClass('hidden');
+$('#pinch-zoom-image-id').addClass('hidden');
+$('.bookimg').removeClass('hidden');
 var numberOfImages = 144;
 var $container = $("#pictureBlock ul");
 for (var i=1; i<=numberOfImages; i++) {
-  $container.append("<li><img style='width:90%;' onClick='to("+i+")' src='img/file-page"+i+".jpg' /><br><b style='font-size:8px;'>Page "+i+"</b></li>");
+  $container.append("<li class='nail'><img style='width:90%;' onClick='to("+i+")' src='img/file-page"+i+".jpg' /><br><b style='font-size:8px;'>Page "+i+"</b></li>");
 }
 
 }
 
+      var MIN_SCALE = 1; // 1=scaling when first loaded
+      var MAX_SCALE = 64;
+
+      // HammerJS fires "pinch" and "pan" events that are cumulative in nature and not
+      // deltas. Therefore, we need to store the "last" values of scale, x and y so that we can
+      // adjust the UI accordingly. It isn't until the "pinchend" and "panend" events are received
+      // that we can set the "last" values.
+
+      // Our "raw" coordinates are not scaled. This allows us to only have to modify our stored
+      // coordinates when the UI is updated. It also simplifies our calculations as these
+      // coordinates are without respect to the current scale.
+
+      var imgWidth = null;
+      var imgHeight = null;
+      var viewportWidth = null;
+      var viewportHeight = null;
+      var scale = null;
+      var lastScale = null;
+      var container = null;
+      var img = null;
+      var x = 0;
+      var lastX = 0;
+      var y = 0;
+      var lastY = 0;
+      var pinchCenter = null;
+
+      // We need to disable the following event handlers so that the browser doesn't try to
+      // automatically handle our image drag gestures.
+      var disableImgEventHandlers = function () {
+        var events = ['onclick', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover',
+                      'onmouseup', 'ondblclick', 'onfocus', 'onblur'];
+
+        events.forEach(function (event) {
+          img[event] = function () {
+		  console.log('disable');
+            return false;
+          };
+        });
+      };
+
+      // Traverse the DOM to calculate the absolute position of an element
+      var absolutePosition = function (el) {
+        var x = 0,
+          y = 0;
+
+        while (el !== null) {
+          x += el.offsetLeft;
+          y += el.offsetTop;
+          el = el.offsetParent;
+        }
+
+        return { x: x, y: y };
+      };
+
+      var restrictScale = function (scale) {
+        if (scale < MIN_SCALE) {
+          scale = MIN_SCALE;
+        } else if (scale > MAX_SCALE) {
+          scale = MAX_SCALE;
+        }
+        return scale;
+      };
+
+      var restrictRawPos = function (pos, viewportDim, imgDim) {
+        if (pos < viewportDim/scale - imgDim) { // too far left/up?
+          pos = viewportDim/scale - imgDim;
+        } else if (pos > 0) { // too far right/down?
+          pos = 0;
+        }
+        return pos;
+      };
+
+      var updateLastPos = function (deltaX, deltaY) {
+        lastX = x;
+        lastY = y;
+      };
+
+      var translate = function (deltaX, deltaY) {
+        // We restrict to the min of the viewport width/height or current width/height as the
+        // current width/height may be smaller than the viewport width/height
+
+        var newX = restrictRawPos(lastX + deltaX/scale,
+                                  Math.min(viewportWidth, curWidth), imgWidth);
+        x = newX;
+        img.style.marginLeft = Math.ceil(newX*scale) + 'px';
+
+        var newY = restrictRawPos(lastY + deltaY/scale,
+                                  Math.min(viewportHeight, curHeight), imgHeight);
+        y = newY;
+        img.style.marginTop = Math.ceil(newY*scale) + 'px';
+      };
+
+      var zoom = function (scaleBy) {
+        scale = restrictScale(lastScale*scaleBy);
+
+        curWidth = imgWidth*scale;
+        curHeight = imgHeight*scale;
+
+        img.style.width = Math.ceil(curWidth) + 'px';
+        img.style.height = Math.ceil(curHeight) + 'px';
+
+        // Adjust margins to make sure that we aren't out of bounds
+        translate(0, 0);
+      };
+
+      var rawCenter = function (e) {
+        var pos = absolutePosition(container);
+
+        // We need to account for the scroll position
+        var scrollLeft = window.pageXOffset ? window.pageXOffset : document.body.scrollLeft;
+        var scrollTop = window.pageYOffset ? window.pageYOffset : document.body.scrollTop;
+
+        var zoomX = -x + (e.center.x - pos.x + scrollLeft)/scale;
+        var zoomY = -y + (e.center.y - pos.y + scrollTop)/scale;
+
+        return { x: zoomX, y: zoomY };
+      };
+
+      var updateLastScale = function () {
+        lastScale = scale;
+      };
+
+      var zoomAround = function (scaleBy, rawZoomX, rawZoomY, doNotUpdateLast) {
+        // Zoom
+        zoom(scaleBy);
+
+        // New raw center of viewport
+        var rawCenterX = -x + Math.min(viewportWidth, curWidth)/2/scale;
+        var rawCenterY = -y + Math.min(viewportHeight, curHeight)/2/scale;
+
+        // Delta
+        var deltaX = (rawCenterX - rawZoomX)*scale;
+        var deltaY = (rawCenterY - rawZoomY)*scale;
+
+        // Translate back to zoom center
+        translate(deltaX, deltaY);
+
+        if (!doNotUpdateLast) {
+          updateLastScale();
+          updateLastPos();
+        }
+      };
+
+      var zoomCenter = function (scaleBy) {
+        // Center of viewport
+        var zoomX = -x + Math.min(viewportWidth, curWidth)/2/scale;
+        var zoomY = -y + Math.min(viewportHeight, curHeight)/2/scale;
+
+        zoomAround(scaleBy, zoomX, zoomY);
+      };
+
+      var zoomIn = function () {
+	  $('#pinch-zoom-image-id').attr('alt','book');
+	  $('#pinch-zoom-image-id').removeClass('pinch-zoom-image');
+	  $('#in').css("pointer-events", "none");
+        zoomCenter(2);
+      };
+
+      var zoomOut = function () {
+	  $('#pinch-zoom-image-id').attr('alt','images');
+	  $('#pinch-zoom-image-id').addClass('pinch-zoom-image');
+	  $('#in').css("pointer-events", "auto");
+        zoomCenter(1/2);
+      };
+
+      function onLoad() {
+
+        img = document.getElementById('pinch-zoom-image-id');
+        container = img.parentElement;
+
+        disableImgEventHandlers();
+
+        imgWidth = img.width;
+        imgHeight = img.height;
+        viewportWidth = img.offsetWidth;
+        scale = viewportWidth/imgWidth;
+        lastScale = scale;
+        viewportHeight = img.parentElement.offsetHeight;
+        curWidth = imgWidth*scale;
+        curHeight = imgHeight*scale;
+
+        var hammer = new Hammer(container, {
+          domEvents: true
+        });
+
+        hammer.get('pinch').set({
+          enable: false
+        });
+
+        hammer.on('pan', function (e) {
+          translate(e.deltaX, e.deltaY);
+        });
+
+        hammer.on('panend', function (e) {
+          updateLastPos();
+        });
+
+        hammer.on('pinch', function (e) {
+
+          // We only calculate the pinch center on the first pinch event as we want the center to
+          // stay consistent during the entire pinch
+          //if (pinchCenter === null) {
+          //  pinchCenter = rawCenter(e);
+          //  var offsetX = pinchCenter.x*scale - (-x*scale + Math.min(viewportWidth, curWidth)/2);
+          //  var offsetY = pinchCenter.y*scale - (-y*scale + Math.min(viewportHeight, curHeight)/2);
+          //  pinchCenterOffset = { x: offsetX, y: offsetY };
+         // }
+
+          // When the user pinch zooms, she/he expects the pinch center to remain in the same
+          // relative location of the screen. To achieve this, the raw zoom center is calculated by
+          // first storing the pinch center and the scaled offset to the current center of the
+          // image. The new scale is then used to calculate the zoom center. This has the effect of
+          // actually translating the zoom center on each pinch zoom event.
+          var newScale = restrictScale(scale*e.scale);
+          var zoomX = pinchCenter.x*newScale - pinchCenterOffset.x;
+          var zoomY = pinchCenter.y*newScale - pinchCenterOffset.y;
+          var zoomCenter = { x: zoomX/newScale, y: zoomY/newScale };
+
+          //zoomAround(e.scale, zoomCenter.x, zoomCenter.y, true);
+        });
+
+        hammer.on('pinchend', function (e) {
+          updateLastScale();
+          updateLastPos();
+          pinchCenter = null;
+        });
+
+        hammer.on('doubletap', function (e) {
+          //var c = rawCenter(e);
+          //zoomAround(2, c.x, c.y);
+        });
+
+      };
 
 
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
